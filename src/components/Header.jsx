@@ -5,28 +5,25 @@ import '../styles/Header.css'
 
 const Header = () => {
   return (
-    <header className="header">
-      <div className="logo-header">
-        <img src={logo} alt="SportSee logo" />
-      </div>
-
-      <nav className="nav">
-        <ul>
-          <li>
-            <Link to="/">Accueil</Link>
-          </li>
-          <li>
-            <Link to="/">Profil</Link>
-          </li>
-          <li>
-            <Link to="/">Réglages</Link>
-          </li>
-          <li>
-            <Link to="/">Communauté</Link>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    <nav>
+      <Link to="/">
+        <img src={logo} alt="logo SportSee" />
+      </Link>
+      <ul>
+        <li>
+          <Link to="/">Accueil</Link>
+        </li>
+        <li>
+          <Link to="/">Profil</Link>
+        </li>
+        <li>
+          <Link to="/">Réglages</Link>
+        </li>
+        <li>
+          <Link to="/">Communauté</Link>
+        </li>
+      </ul>
+    </nav>
   )
 }
 
