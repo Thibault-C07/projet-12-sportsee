@@ -1,0 +1,21 @@
+.calorie,
+.protein,
+.carbohydrate,
+.lipid {
+  width: 258px;
+  height: 124px;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.calorie img,
+.protein img,
+.carbohydrate img,
+.lipid img {
+  width: 60px;
+  padding-left: 30px;
+  padding-right: 30px;
+}

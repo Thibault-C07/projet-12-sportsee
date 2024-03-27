@@ -18,9 +18,12 @@
   margin-bottom: 20px;
 }
 .text {
+  font-family: 'Roboto';
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 24px;
   rotate: -90deg;
   padding: 0px;
-  font-size: 12px;
   width: max-content;
   padding-right: 80px;
 }

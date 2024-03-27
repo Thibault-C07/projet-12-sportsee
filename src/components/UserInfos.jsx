@@ -1,14 +1,13 @@
 import React from 'react'
+import '../styles/UserInfos.css'
 
 const UserInfos = ({ firstName }) => {
   return (
-    <div className="profil-title">
-      <div className="title">
-        <h1>Bonjour</h1>
-        <span>
-          <h1>{firstName}</h1>
-        </span>
-      </div>
+    <div className="user-infos">
+      <h1>
+        Bonjour <span className="firstname">{firstName}</span>
+      </h1>
+
       <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
     </div>
   )

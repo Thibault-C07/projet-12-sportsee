@@ -1,15 +1,22 @@
 import React from 'react'
-import Header from '../components/Header'
-import Sidebar from '../components/Sidebar'
-import UserHead from '../components/UserHead'
+import {
+  USER_ACTIVITY,
+  USER_MAIN_DATA,
+  USER_AVERAGE_SESSIONS,
+  USER_PERFORMANCE,
+} from '../datas/dataMocked'
+import UserInfos from '../components/UserInfos'
+import KeyData from '../components/KeyData'
 
 const Home = () => {
+  const userMainData = USER_MAIN_DATA[0]
   return (
-    <>
-      <Header />
-      <UserHead />
-      <Sidebar />
-    </>
+    <React.StrictMode>
+      <UserInfos firstName={userMainData.userInfos.firstName} />
+      <div>
+        <KeyData keyData={userMainData.keyData} />
+      </div>
+    </React.StrictMode>
   )
 }
 
