@@ -1,0 +1,51 @@
+.infos_container {
+  width: 100%;
+  display: flex;
+  margin-top: 100px;
+  margin-bottom: 120px;
+}
+
+.layout {
+  width: 80%;
+  margin-right: -150px;
+}
+
+.layout_2 {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.keydata_container {
+  width: 20%;
+}
+
+.activities_weight {
+  width: 80%;
+  height: 320px;
+  background-color: #fbfbfb;
+  border-radius: 5px;
+}
+
+.average_sessions {
+  background-color: red;
+  width: 30%;
+  height: 263px;
+  border-radius: 5px;
+  color: white;
+}
+
+.performances {
+  background-color: #282d30;
+  width: 30%;
+  height: 263px;
+  border-radius: 5px;
+}
+
+.user_score {
+  width: 30%;
+  height: 263px;
+  border-radius: 5px;
+  background-color: #fbfbfb;
+}
