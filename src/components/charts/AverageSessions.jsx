@@ -3,13 +3,20 @@ import { useState, useEffect } from 'react'
 import { ResponsiveContainer, LineChart, XAxis, Tooltip, Line } from 'recharts'
 import '../../styles/AverageSessions.css'
 import UserAverageSessions from '../../datas/user_average-sessions.json'
+import { getUserAverageSession } from '../../datas/api'
 
-const AverageSessions = ({ averageSessions }) => {
-  const [userSession, setUserSession] = useState([])
+export const USER_ID = 18
+
+const AverageSessions = () => {
+  const [userAverageSession, setUserAverageSession] = useState([])
 
   useEffect(() => {
-    setUserSession(UserAverageSessions.data.sessions)
-  }, [averageSessions])
+    async function fetchData() {
+      const fetchedUserAverageSession = await getUserAverageSession(USER_ID)
+      setUserAverageSession(fetchedUserAverageSession.sessions)
+    }
+    fetchData()
+  }, [])
 
   const tooltipLabelStyle = {
     display: 'none',
@@ -67,7 +74,7 @@ const AverageSessions = ({ averageSessions }) => {
       <div className="sessions">
         <div className="sessions_title">Durée moyenne des sessions</div>
         <ResponsiveContainer width="100%" height={180}>
-          <LineChart data={userSession}>
+          <LineChart data={userAverageSession}>
             <XAxis
               dataKey="day"
               axisLine={false}
@@ -76,12 +83,14 @@ const AverageSessions = ({ averageSessions }) => {
               fill="#ffffff"
               tick={{ fill: 'white', opacity: 0.5, fontSize: '15px' }}
             />
+
             <Tooltip
               labelStyle={tooltipLabelStyle}
               itemStyle={tooltipItemStyle}
               content={<CustomTooltip />}
               cursor={false}
             />
+
             <Line
               type="monotone"
               dataKey="sessionLength"

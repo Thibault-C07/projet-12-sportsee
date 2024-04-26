@@ -2,8 +2,14 @@ import calorieIcon from '../assets/icon-calorie.png'
 import proteinIcon from '../assets/icon-protein.png'
 import carbohydrateIcon from '../assets/icon-carbohydrate.png'
 import lipidIcon from '../assets/icon-lipid.png'
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { getUserInfo } from '../datas/api'
+import { USER_ID } from './charts/ScorePieChart'
 
 const CardKeyData = ({ name, content }) => {
+  const [userKeyData, setUserKeyData] = useState(undefined)
+
   let spanTraduction = ''
   let img = ''
   let unit = ''
@@ -33,6 +39,16 @@ const CardKeyData = ({ name, content }) => {
     default:
       break
   }
+
+  useEffect(() => {
+    async function fetchData() {
+      const fetchedUserKeyData = await getUserInfo(USER_ID)
+      setUserKeyData(fetchedUserKeyData)
+    }
+    fetchData()
+  }, [])
+
+  console.log({ userKeyData })
 
   return (
     <div className={name}>

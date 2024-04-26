@@ -1,24 +1,34 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
 import { PieChart, Pie, ResponsiveContainer } from 'recharts'
 import '../../styles/ScorePieChart.css'
+import { getUserInfo } from '../../datas/api'
+
+export const USER_ID = 18
 
 const Score = ({ userScore }) => {
-  const data01 = [
-    {
-      value: 100,
-    },
-  ]
-  const data02 = [
-    {
-      value: 100,
-    },
-  ]
+  const [userChart, setUserChart] = useState(undefined)
+
+  const scorePercentage = userScore.score * 100
+  const remainingPercentage = 100 - scorePercentage
+  const filledData = [{ name: 'Score atteint', value: scorePercentage }]
+  const remainingData = [{ name: 'Restant', value: remainingPercentage }]
+
+  useEffect(() => {
+    async function fetchData() {
+      const fetchedUserChart = await getUserInfo(USER_ID)
+      setUserChart(fetchedUserChart)
+    }
+    fetchData()
+  }, [])
+
+  console.log({ userChart })
 
   return (
     <>
       <div className="score_title">Score</div>
       <div className="score_text">
-        <span className="number_score">{userScore.score}%</span> de votre
+        <span className="number_score">{userScore.score * 100}%</span> de votre
         objectif
       </div>
       <div className="score_chart">
@@ -26,7 +36,7 @@ const Score = ({ userScore }) => {
           <PieChart>
             <text />
             <Pie
-              data={data01}
+              data={filledData}
               dataKey={'value'}
               cx="50%"
               cy="50%"
@@ -34,10 +44,10 @@ const Score = ({ userScore }) => {
               fill="#FFFFFF"
             />
             <Pie
-              data={data02}
+              data={remainingData}
               dataKey="value"
               startAngle={180}
-              endAngle={180 - (userScore.score * 100 * 180) / 100}
+              endAngle={180 - scorePercentage * 3.6}
               cx="50%"
               cy="50%"
               innerRadius={70}

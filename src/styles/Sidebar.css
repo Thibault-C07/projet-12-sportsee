@@ -11,6 +11,7 @@
 .sidebar-nav {
   display: flex;
   flex-direction: column;
+  margin-top: 100px;
 }
 
 .sidebar-nav img {

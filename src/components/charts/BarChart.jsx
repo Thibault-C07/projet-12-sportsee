@@ -11,19 +11,19 @@ import {
   ResponsiveContainer,
 } from 'recharts'
 import '../../styles/BarChart.css'
-import UserActivity from '../../datas/user_activity.json'
+import { getUserActivity } from '../../datas/api'
 
-/**
- *
- * @param {*} param0
- * @returns
- */
+export const USER_ID = 18
 
 const Weight = ({ activity }) => {
   const [userActivity, setUserActivity] = useState([])
 
   useEffect(() => {
-    setUserActivity(UserActivity.data.sessions)
+    async function fetchData() {
+      const fetchedUserActivity = await getUserActivity(USER_ID)
+      setUserActivity(fetchedUserActivity.sessions)
+    }
+    fetchData()
   }, [activity])
 
   const tooltipLabelStyle = {
@@ -85,11 +85,11 @@ const Weight = ({ activity }) => {
   }
 
   const yTickFormat = (y) => {
-    return y / 1000
+    return y / 1
   }
 
   return (
-    <React.StrictMode>
+    <>
       <div className="weight">
         <div className="weight_text_title">Activité quotidienne</div>
         <ResponsiveContainer width="100%" height={270}>
@@ -141,7 +141,7 @@ const Weight = ({ activity }) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-    </React.StrictMode>
+    </>
   )
 }
 

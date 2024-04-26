@@ -8,17 +8,26 @@ import {
   PolarRadiusAxis,
   Radar,
 } from 'recharts'
-import UserPerformances from '../../datas/user_performance.json'
+import { getUserPerformances } from '../../datas/api'
 
-const Performances = () => {
+export const USER_ID = 18
+
+const Performances = ({ perfsKind, perfsData }) => {
   const [userPerformances, setUserPerformances] = useState([])
 
   useEffect(() => {
-    setUserPerformances(UserPerformances.data)
+    async function fetchData() {
+      const fetcheUserPerformances = await getUserPerformances(USER_ID)
+      setUserPerformances(fetcheUserPerformances.data)
+    }
+    fetchData()
   }, [])
 
+  console.log({ userPerformances })
+
+  const kindArray = Object.entries(perfsKind)
   const kindFormatter = (perfsData) => {
-    switch (perfsData) {
+    switch (kindArray[perfsData - 1][1]) {
       case 'cardio':
         return 'Cardio'
       case 'energy':
@@ -38,27 +47,27 @@ const Performances = () => {
 
   return (
     <>
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer>
         <RadarChart
+          className="radarchart-background"
           innerRadius="0"
           outerRadius="69%"
-          data={userPerformances.data}
+          data={userPerformances}
         >
           <PolarGrid radialLines={false} />
           <PolarAngleAxis
             dataKey="kind"
-            tickFormatter={(value) =>
-              kindFormatter(userPerformances.kind[value])
-            }
+            stroke="white"
+            tickFormatter={kindFormatter}
             tickLine={false}
             dy={4}
             tickSize={15}
-            tick={{ fill: 'white' }}
           />
           <PolarRadiusAxis tick={false} axisLine={false} />
           <Radar
+            name=""
             dataKey="value"
-            fill="#FF0101B2"
+            fill="#ff0101B2"
             fillOpacity={1}
             stroke="#FF0101B2"
           />

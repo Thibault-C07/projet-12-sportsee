@@ -6,9 +6,10 @@
   height: 124px;
   border-radius: 5px;
   background-color: #fbfbfb;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
+  font-weight: bold;
 }
 
 .calorie img,
