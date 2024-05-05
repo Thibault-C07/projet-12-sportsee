@@ -17,8 +17,6 @@ const Home = () => {
     }
     fetchData()
   }, [])
-
-  console.log({ user })
   return (
     <>
       <UserInfos />

@@ -2,18 +2,25 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import { ResponsiveContainer, LineChart, XAxis, Tooltip, Line } from 'recharts'
 import '../../styles/AverageSessions.css'
-import UserAverageSessions from '../../datas/user_average-sessions.json'
 import { getUserAverageSession } from '../../datas/api'
 
 export const USER_ID = 18
 
 const AverageSessions = () => {
   const [userAverageSession, setUserAverageSession] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     async function fetchData() {
-      const fetchedUserAverageSession = await getUserAverageSession(USER_ID)
-      setUserAverageSession(fetchedUserAverageSession.sessions)
+      try {
+        const fetchedUserAverageSession = await getUserAverageSession(USER_ID)
+        setUserAverageSession(fetchedUserAverageSession.sessions)
+      } catch (error) {
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
     }
     fetchData()
   }, [])
@@ -50,28 +57,35 @@ const AverageSessions = () => {
 
   const xFormatDay = (x) => {
     switch (x) {
-      case 1:
+      case 'L':
         return 'L'
-      case 2:
+      case 'M':
         return 'M'
-      case 3:
+      case 'M':
         return 'M'
-      case 4:
+      case 'J':
         return 'J'
-      case 5:
+      case 'V':
         return 'V'
-      case 6:
+      case 'S':
         return 'S'
-      case 7:
+      case 'D':
         return 'D'
       default:
-        break
+        return x
     }
+  }
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>
   }
 
   return (
     <>
-      <div className="sessions">
+      <div className="sessions" style={{ width: '100%', height: '100%' }}>
         <div className="sessions_title">Durée moyenne des sessions</div>
         <ResponsiveContainer width="100%" height={180}>
           <LineChart data={userAverageSession}>

@@ -41,6 +41,11 @@
   width: 30%;
   height: 263px;
   border-radius: 5px;
+  position: relative;
+}
+
+.performances .recharts-surface {
+  margin-top: 30px;
 }
 
 .user_score {
@@ -48,4 +53,27 @@
   height: 263px;
   border-radius: 5px;
   background-color: #fbfbfb;
+  position: relative;
+}
+
+@media (min-width: 1024px) and (max-width: 1400px) {
+  .activities_weight {
+    width: 100%;
+  }
+
+  .layout {
+    margin-right: 50px;
+  }
+
+  .layout_2 {
+    width: 100%;
+  }
+
+  .performances {
+    width: 33%;
+  }
+
+  .average_sessions {
+    width: 33%;
+  }
 }

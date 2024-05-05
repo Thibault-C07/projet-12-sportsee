@@ -12,46 +12,81 @@ import { getUserPerformances } from '../../datas/api'
 
 export const USER_ID = 18
 
-const Performances = ({ perfsKind, perfsData }) => {
+const Performances = ({ perfsKind }) => {
   const [userPerformances, setUserPerformances] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [fontSize, setFontSize] = useState(window.innerWidth < 1440 ? 10 : 15)
+  const [tickSize, setTickSize] = useState(window.innerWidth < 1440 ? 8 : 15)
 
   useEffect(() => {
     async function fetchData() {
-      const fetcheUserPerformances = await getUserPerformances(USER_ID)
-      setUserPerformances(fetcheUserPerformances.data)
+      try {
+        const fetchedUserPerformances = await getUserPerformances(USER_ID)
+        if (fetchedUserPerformances && fetchedUserPerformances.performance) {
+          setUserPerformances(fetchedUserPerformances.performance)
+        }
+      } catch (error) {
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
     }
     fetchData()
+    const handleResize = () => {
+      setFontSize(window.innerWidth < 1440 ? 10 : 14)
+      setTickSize(window.innerWidth < 1440 ? 8 : 15)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
-  console.log({ userPerformances })
-
-  const kindArray = Object.entries(perfsKind)
-  const kindFormatter = (perfsData) => {
-    switch (kindArray[perfsData - 1][1]) {
-      case 'cardio':
-        return 'Cardio'
-      case 'energy':
-        return 'Énergie'
-      case 'endurance':
-        return 'Endurance'
-      case 'strength':
-        return 'Force'
-      case 'speed':
-        return 'Vitesse'
-      case 'intensity':
-        return 'Intensité'
-      default:
-        break
+  const kindFormatter = (value) => {
+    if (typeof value === 'string') {
+      switch (value) {
+        case 'cardio':
+          return 'Cardio'
+        case 'energy':
+          return 'Énergie'
+        case 'endurance':
+          return 'Endurance'
+        case 'strength':
+          return 'Force'
+        case 'speed':
+          return 'Vitesse'
+        case 'intensity':
+          return 'Intensité'
+        default:
+          return value
+      }
+    } else {
+      return value
     }
   }
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
   return (
-    <>
-      <ResponsiveContainer>
+    <div
+      className="performances"
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
+    >
+      <ResponsiveContainer width="100%" height={180}>
         <RadarChart
           className="radarchart-background"
-          innerRadius="0"
-          outerRadius="69%"
+          innerRadius="10%"
+          outerRadius="70%"
           data={userPerformances}
         >
           <PolarGrid radialLines={false} />
@@ -61,7 +96,8 @@ const Performances = ({ perfsKind, perfsData }) => {
             tickFormatter={kindFormatter}
             tickLine={false}
             dy={4}
-            tickSize={15}
+            tickSize={tickSize}
+            tick={{ fontSize: fontSize }}
           />
           <PolarRadiusAxis tick={false} axisLine={false} />
           <Radar
@@ -73,7 +109,7 @@ const Performances = ({ perfsKind, perfsData }) => {
           />
         </RadarChart>
       </ResponsiveContainer>
-    </>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
 .sessions_title {
   width: 148px;
-  margin-top: 40px;
+  margin-top: 30px;
   margin-left: 30px;
   opacity: 0.5;
   font-size: 15px;
@@ -8,4 +8,10 @@
 
 .background {
   background-color: #8b0000;
+}
+
+@media (min-width: 1024px) and (max-width: 1400px) {
+  .sessions_title {
+    margin-left: 20px;
+  }
 }

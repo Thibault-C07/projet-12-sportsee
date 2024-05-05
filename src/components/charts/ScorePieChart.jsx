@@ -8,21 +8,52 @@ export const USER_ID = 18
 
 const Score = ({ userScore }) => {
   const [userChart, setUserChart] = useState(undefined)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   const scorePercentage = userScore.score * 100
   const remainingPercentage = 100 - scorePercentage
   const filledData = [{ name: 'Score atteint', value: scorePercentage }]
   const remainingData = [{ name: 'Restant', value: remainingPercentage }]
 
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const fetchedUserChart = await getUserInfo(USER_ID)
+  //       setUserChart(fetchedUserChart)
+  //     } catch (error) {
+  //       setError(error)
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [])
   useEffect(() => {
     async function fetchData() {
-      const fetchedUserChart = await getUserInfo(USER_ID)
-      setUserChart(fetchedUserChart)
+      try {
+        const fetchedUserChart = await getUserInfo(USER_ID)
+        if (fetchedUserChart) {
+          setUserChart(fetchedUserChart)
+        } else {
+          setError(new Error('User chart data is undefined'))
+        }
+      } catch (error) {
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
     }
     fetchData()
   }, [])
 
-  console.log({ userChart })
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
 
   return (
     <>

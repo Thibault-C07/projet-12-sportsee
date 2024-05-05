@@ -20,3 +20,12 @@
   padding-left: 30px;
   padding-right: 30px;
 }
+
+@media (min-width: 1024px) and (max-width: 1400px) {
+  .calorie img,
+  .protein img,
+  .carbohydrate img,
+  .lipid img {
+    width: 40px;
+  }
+}

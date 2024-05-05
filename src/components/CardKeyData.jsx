@@ -9,6 +9,8 @@ import { USER_ID } from './charts/ScorePieChart'
 
 const CardKeyData = ({ name, content }) => {
   const [userKeyData, setUserKeyData] = useState(undefined)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   let spanTraduction = ''
   let img = ''
@@ -42,13 +44,25 @@ const CardKeyData = ({ name, content }) => {
 
   useEffect(() => {
     async function fetchData() {
-      const fetchedUserKeyData = await getUserInfo(USER_ID)
-      setUserKeyData(fetchedUserKeyData)
+      try {
+        const fetchedUserKeyData = await getUserInfo(USER_ID)
+        setUserKeyData(fetchedUserKeyData)
+      } catch (error) {
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
     }
     fetchData()
   }, [])
 
-  console.log({ userKeyData })
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>
+  }
 
   return (
     <div className={name}>

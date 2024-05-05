@@ -17,12 +17,21 @@ export const USER_ID = 18
 
 const Weight = ({ activity }) => {
   const [userActivity, setUserActivity] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     async function fetchData() {
-      const fetchedUserActivity = await getUserActivity(USER_ID)
-      setUserActivity(fetchedUserActivity.sessions)
+      try {
+        const fetchedUserActivity = await getUserActivity(USER_ID)
+        setUserActivity(fetchedUserActivity.sessions)
+      } catch (error) {
+        setError(error)
+      } finally {
+        setLoading(false)
+      }
     }
+
     fetchData()
   }, [activity])
 
@@ -86,6 +95,14 @@ const Weight = ({ activity }) => {
 
   const yTickFormat = (y) => {
     return y / 1
+  }
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>
   }
 
   return (

@@ -9,6 +9,7 @@
   font-size: 15px;
   font-weight: bold;
   position: absolute;
+  margin-top: 5px;
 }
 
 .recharts-default-legend {
@@ -20,4 +21,14 @@
 span,
 .recharts-legend-item-text {
   color: #74798c;
+}
+
+@media (max-width: 1400px) {
+  .recharts-default-legend {
+    width: 100%;
+  }
+
+  .weight_text_title {
+    font-size: 14px;
+  }
 }
