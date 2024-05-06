@@ -6,7 +6,7 @@ import '../styles/Layout.css'
 
 const Layout = () => {
   return (
-    <React.StrictMode>
+    <>
       <Header />
       <div className="container">
         <Sidebar />
@@ -14,7 +14,7 @@ const Layout = () => {
           <Outlet />
         </main>
       </div>
-    </React.StrictMode>
+    </>
   )
 }
 

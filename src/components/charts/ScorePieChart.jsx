@@ -16,19 +16,6 @@ const Score = ({ userScore }) => {
   const filledData = [{ name: 'Score atteint', value: scorePercentage }]
   const remainingData = [{ name: 'Restant', value: remainingPercentage }]
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const fetchedUserChart = await getUserInfo(USER_ID)
-  //       setUserChart(fetchedUserChart)
-  //     } catch (error) {
-  //       setError(error)
-  //     } finally {
-  //       setLoading(false)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [])
   useEffect(() => {
     async function fetchData() {
       try {

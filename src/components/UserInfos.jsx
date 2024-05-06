@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import '../styles/UserInfos.css'
-import User from './../datas/user.json'
 import { USER_ID } from './charts/BarChart'
 import { getUserInfo } from '../datas/api'
 
