@@ -11,14 +11,34 @@ import UserAverageSession from './user_average-sessions.json'
 const BASE_URL = 'http://localhost:3001'
 const USE_MOCKED_DATA = false
 
-export const getUserInfo = async (userId) => {
-  if (USE_MOCKED_DATA) {
-    return User.data
-  }
-  const data = await fetchData(`${BASE_URL}/user/${userId}`)
+// export const getUserInfo = async (userId) => {
+//   if (USE_MOCKED_DATA) {
+//     return User.data
+//   }
+//   const data = await fetchData(`${BASE_URL}/user/${userId}`)
 
-  const user = new UserInfo(data)
-  return user
+//   const user = new UserInfo(data)
+//   return user
+// }
+export const getUserInfo = async (userId) => {
+  let userData
+  let error = null
+
+  try {
+    if (USE_MOCKED_DATA) {
+      userData = User.data
+    } else {
+      const data = await fetchData(`${BASE_URL}/user/${userId}`)
+      if (!data) {
+        throw new Error('User data is undefined')
+      }
+      userData = new UserInfo(data)
+    }
+  } catch (err) {
+    error = err.message
+  }
+
+  return { userData, error }
 }
 
 export const getUserActivity = async (userId) => {

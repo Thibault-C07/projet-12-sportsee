@@ -9,13 +9,29 @@ const UserInfos = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const fetchedUserInfos = await getUserInfo(USER_ID)
+  //       setUser(fetchedUserInfos)
+  //     } catch (error) {
+  //       setError(error)
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [])
   useEffect(() => {
     async function fetchData() {
       try {
-        const fetchedUserInfos = await getUserInfo(USER_ID)
-        setUser(fetchedUserInfos)
+        const { userData, error } = await getUserInfo(USER_ID)
+        if (error) {
+          throw new Error(error)
+        }
+        setUser(userData)
       } catch (error) {
-        setError(error)
+        setError(error.message)
       } finally {
         setLoading(false)
       }
@@ -28,7 +44,7 @@ const UserInfos = () => {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <div>Error while fetching data {error.message}</div>
   }
 
   return (

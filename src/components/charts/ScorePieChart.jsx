@@ -16,17 +16,33 @@ const Score = ({ userScore }) => {
   const filledData = [{ name: 'Score atteint', value: scorePercentage }]
   const remainingData = [{ name: 'Restant', value: remainingPercentage }]
 
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const fetchedUserChart = await getUserInfo(USER_ID)
+  //       if (fetchedUserChart) {
+  //         setUserChart(fetchedUserChart)
+  //       } else {
+  //         setError(new Error('User chart data is undefined'))
+  //       }
+  //     } catch (error) {
+  //       setError(error)
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [])
   useEffect(() => {
     async function fetchData() {
       try {
-        const fetchedUserChart = await getUserInfo(USER_ID)
-        if (fetchedUserChart) {
-          setUserChart(fetchedUserChart)
-        } else {
-          setError(new Error('User chart data is undefined'))
+        const { userData, error } = await getUserInfo(USER_ID)
+        if (error) {
+          throw new Error(error)
         }
+        setUserChart(userData)
       } catch (error) {
-        setError(error)
+        setError(error.message)
       } finally {
         setLoading(false)
       }
@@ -39,7 +55,7 @@ const Score = ({ userScore }) => {
   }
 
   if (error) {
-    return <div>Error: {error.message}</div>
+    return <div>Error while fetching data {error.message}</div>
   }
 
   return (
